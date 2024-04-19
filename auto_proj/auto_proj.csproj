@@ -71,12 +71,18 @@
     <Compile Include="Classes\CSheet.cs" />
     <Compile Include="Classes\SIDS.cs" />
     <Compile Include="Enum\EXCEL_KIND.cs" />
-    <Compile Include="Enum\IO_DIVIDE.cs" />
+    <Compile Include="Enum\IO_TYPE.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form\FormCpuPanelDefine.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\FormCpuPanelDefine.Designer.cs">
+      <DependentUpon>FormCpuPanelDefine.cs</DependentUpon>
     </Compile>
     <Compile Include="Form\FormCreateProj.cs">
       <SubType>Form</SubType>
@@ -120,6 +126,12 @@
     <Compile Include="Form\FormPLCConfigcs.Designer.cs">
       <DependentUpon>FormPLCConfigcs.cs</DependentUpon>
     </Compile>
+    <Compile Include="Form\FormCreateTemplate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\FormCreateTemplate.Designer.cs">
+      <DependentUpon>FormCreateTemplate.cs</DependentUpon>
+    </Compile>
     <Compile Include="IInformation.cs" />
     <Compile Include="Popup\PopupPIDMapping1.cs">
       <SubType>Form</SubType>
@@ -132,6 +144,12 @@
     </Compile>
     <Compile Include="Popup\PopupSelectProj.Designer.cs">
       <DependentUpon>PopupSelectProj.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Popup\PopupUnSortedList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Popup\PopupUnSortedList.Designer.cs">
+      <DependentUpon>PopupUnSortedList.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -180,6 +198,9 @@
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Form\FormCpuPanelDefine.resx">
+      <DependentUpon>FormCpuPanelDefine.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form\FormCreateProj.resx">
       <DependentUpon>FormCreateProj.cs</DependentUpon>
     </EmbeddedResource>
@@ -201,11 +222,17 @@
     <EmbeddedResource Include="Form\FormPLCConfigcs.resx">
       <DependentUpon>FormPLCConfigcs.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Form\FormCreateTemplate.resx">
+      <DependentUpon>FormCreateTemplate.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Popup\PopupPIDMapping1.resx">
       <DependentUpon>PopupPIDMapping1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Popup\PopupSelectProj.resx">
       <DependentUpon>PopupSelectProj.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Popup\PopupUnSortedList.resx">
+      <DependentUpon>PopupUnSortedList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">

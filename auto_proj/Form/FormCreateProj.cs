@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using auto_proj.Classes;
 using System.Data.SqlClient;
+using DevExpress.Spreadsheet;
 
 namespace auto_proj.Form
 {
@@ -190,30 +191,29 @@ namespace auto_proj.Form
             openFileDialog.Multiselect = false;
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                fileTotalName = openFileDialog.FileName;
-                string[] splited = fileTotalName.Split('\\');
-                fileName = splited.Last<string>();
-                txtFilePath.Text = fileTotalName;
-                txtFileName.Text = fileName;
-            }
+             {
+                 fileTotalName = openFileDialog.FileName;
+                 string[] splited = fileTotalName.Split('\\');
+                 fileName = splited.Last<string>();
+                 txtFilePath.Text = fileTotalName;
+                 txtFileName.Text = fileName;
+             }
 
-            try
-            {
-                if (fileName != string.Empty)
-                    instExcelBytes = BinaryFile.GetBinaryFromFile(fileTotalName);
-                else
-                    return;
-            }
-            catch(Exception ex)
-            {
-                txtFilePath.Text = "";
-                txtFileName.Text = "";
-                MessageBox.Show(ex.ToString());
-            }
-
-            //  BinaryFile.MakeFileFromBinary(bytes, splited.Last<string>());
+             try
+             {
+                 if (fileName != string.Empty)
+                     instExcelBytes = BinaryFile.GetBinaryFromFile(fileTotalName);
+                 else
+                     return;
+             }
+             catch(Exception ex)
+             {
+                 txtFilePath.Text = "";
+                 txtFileName.Text = "";
+                 MessageBox.Show(ex.ToString());
+             }
         }
+       
 
         private bool CheckFields()
         {

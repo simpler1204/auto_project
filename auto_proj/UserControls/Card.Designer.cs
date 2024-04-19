@@ -32,49 +32,63 @@ namespace auto_proj.UserControls
             this.lblCardName = new System.Windows.Forms.Label();
             this.lblChannel = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lblSlot = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblCardName
             // 
             this.lblCardName.AutoSize = true;
-            this.lblCardName.Location = new System.Drawing.Point(12, 60);
-            this.lblCardName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblCardName.Location = new System.Drawing.Point(6, 50);
+            this.lblCardName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblCardName.Name = "lblCardName";
-            this.lblCardName.Size = new System.Drawing.Size(29, 24);
+            this.lblCardName.Size = new System.Drawing.Size(16, 12);
             this.lblCardName.TabIndex = 0;
             this.lblCardName.Text = "AI";
             // 
             // lblChannel
             // 
             this.lblChannel.AutoSize = true;
-            this.lblChannel.Location = new System.Drawing.Point(15, 108);
-            this.lblChannel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblChannel.Location = new System.Drawing.Point(8, 74);
+            this.lblChannel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblChannel.Name = "lblChannel";
-            this.lblChannel.Size = new System.Drawing.Size(23, 24);
+            this.lblChannel.Size = new System.Drawing.Size(11, 12);
             this.lblChannel.TabIndex = 1;
             this.lblChannel.Text = "8";
             // 
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.SystemColors.ControlText;
+            this.groupBox1.Controls.Add(this.lblSlot);
             this.groupBox1.Controls.Add(this.lblCardName);
             this.groupBox1.Controls.Add(this.lblChannel);
             this.groupBox1.ForeColor = System.Drawing.Color.Red;
-            this.groupBox1.Location = new System.Drawing.Point(1, 1);
+            this.groupBox1.Location = new System.Drawing.Point(1, 0);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(63, 195);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Size = new System.Drawing.Size(34, 98);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             // 
+            // lblSlot
+            // 
+            this.lblSlot.AutoSize = true;
+            this.lblSlot.Location = new System.Drawing.Point(6, 18);
+            this.lblSlot.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblSlot.Name = "lblSlot";
+            this.lblSlot.Size = new System.Drawing.Size(16, 12);
+            this.lblSlot.TabIndex = 2;
+            this.lblSlot.Text = "AI";
+            // 
             // Card
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 24F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.groupBox1);
-            this.Margin = new System.Windows.Forms.Padding(4);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "Card";
-            this.Size = new System.Drawing.Size(70, 200);
+            this.Size = new System.Drawing.Size(38, 100);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -86,5 +100,6 @@ namespace auto_proj.UserControls
         public System.Windows.Forms.Label lblCardName;
         public System.Windows.Forms.Label lblChannel;
         private System.Windows.Forms.GroupBox groupBox1;
+        public System.Windows.Forms.Label lblSlot;
     }
 }

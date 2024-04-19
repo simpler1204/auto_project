@@ -23,14 +23,14 @@ namespace auto_proj.Form
         Project project = null;
         PopupSelectProj selectProj = null;
 
-        Microsoft.Office.Interop.Excel.Application xlApp = null;
-        Microsoft.Office.Interop.Excel.Workbook xlWorkbook = null;
+       // Microsoft.Office.Interop.Excel.Application xlApp = null;
+       // Microsoft.Office.Interop.Excel.Workbook xlWorkbook = null;
 
         List<CSheet> sheetList = new List<CSheet>();
         List<PartIoCount> partIoCountList = new List<PartIoCount>();
 
-        string sludgeName = "SLUDGE";
-        string[] arrWorkingPart = { "INST", "PKG", "MCC", "공조제어" };
+        //string sludgeName = "SLUDGE";
+        string[] arrWorkingPart = { "INST", "PKG", "MCC", "HVAC" };
         //string[] arrWorkingPart = { "INST", "PKG" };
         string[] arrIoTypeNames = new string[4];
 
@@ -40,8 +40,6 @@ namespace auto_proj.Form
         DataTable dtHvac = new DataTable();
         DataTable dtTempSum = new DataTable();
         DataTable dtSaved = new DataTable();
-
-        HashSet<string> setPid = new HashSet<string>();
 
         // -- 신규
         string COL_IO_TYPE = "IO_Type";
@@ -89,11 +87,70 @@ namespace auto_proj.Form
         {
             if (project == null) return;
 
-            arrIoTypeNames[0] = project.AiDefine;
-            arrIoTypeNames[1] = project.AoDefine;
-            arrIoTypeNames[2] = project.DiDefine;
-            arrIoTypeNames[3] = project.DoDefine;
+            bool isExists = BinaryFile.MakeFileFromBinary(project.InstExcel, project.InstFileName);
+            string path = Environment.CurrentDirectory + "\\" + project.InstFileName;
 
+            if (!isExists)
+            {
+                MessageBox.Show("Excel 파일을 불러오는데 실패하였습니다.");
+                return;
+            }
+
+            InsertDataFromExcel(path);
+
+            dtInst.Rows.Clear();
+            dtPkg.Rows.Clear();
+            dtMcc.Rows.Clear();
+            dtHvac.Rows.Clear();
+
+            string connectString = SIDS.Instance.MakeConnectionString("DB");
+            using (SqlConnection conn = new SqlConnection(connectString))
+            {
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand("dbo.proc_inst_total_select", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    foreach (var partName in arrWorkingPart)
+                    {
+                        cmd.Parameters.Add("@projId", SqlDbType.Int).Value = this.project.ProjID;
+                        cmd.Parameters.Add("@partName", SqlDbType.NVarChar).Value = partName;
+                        cmd.Parameters.Add("@aiDefine", SqlDbType.NVarChar).Value = this.project.AiDefine;
+                        cmd.Parameters.Add("@aoDefine", SqlDbType.NVarChar).Value = this.project.AoDefine;
+                        cmd.Parameters.Add("@diDefine", SqlDbType.NVarChar).Value = this.project.DiDefine;
+                        cmd.Parameters.Add("@doDefine", SqlDbType.NVarChar).Value = this.project.DoDefine;
+
+                        SqlDataReader reader = cmd.ExecuteReader();
+
+                        if(partName == "INST")
+                        {
+                            dtInst.Load(reader);
+                            gridInst.DataSource = dtInst;
+                        }
+                        else if (partName == "PKG")
+                        {
+                            dtPkg.Load(reader);
+                            gridPkg.DataSource = dtPkg;
+                        }
+                        else if (partName == "MCC")
+                        {
+                            dtMcc.Load(reader);
+                            gridMcc.DataSource = dtMcc;
+                        }
+                        else if (partName == "HVAC")
+                        {
+                            dtHvac.Load(reader);
+                            gridHvac.DataSource = dtHvac;
+                        }
+
+                        cmd.Parameters.Clear();
+                    }
+                    
+                }
+            }
+
+            
+
+            /*
             try
             {
                 bool isExists = BinaryFile.MakeFileFromBinary(project.InstExcel, project.InstFileName);
@@ -105,6 +162,9 @@ namespace auto_proj.Form
                     return;
                 }
 
+               // InsertDataFromExcel(path);
+
+                
                 // 초기화
                 partIoCountList.Clear();
 
@@ -134,6 +194,7 @@ namespace auto_proj.Form
                 }
 
                 GatheringIoCount();
+                
             }
             catch (Exception ex)
             {
@@ -142,9 +203,7 @@ namespace auto_proj.Form
             finally
             {
 
-            }
-
-
+            }*/
         }
 
         // ========== Excel
@@ -171,6 +230,12 @@ namespace auto_proj.Form
                 PartIoCount partIoCount = new PartIoCount(_part);
                 int returnCount = 0;
 
+                DataTable dtTemp = new DataTable();
+                DataColumn column1 = new DataColumn("name", typeof(string));
+                DataColumn column2 = new DataColumn("cpuName", typeof(string));
+                dtTemp.Columns.Add(column1);
+                dtTemp.Columns.Add(column2);
+
                 // Sheet 검색
                 for (int i = stRowIdx + 1; i < _ws.Rows.LastUsedIndex + 1; i++)
                 {
@@ -179,7 +244,12 @@ namespace auto_proj.Form
                     string strPID = _ws.Cells[i, idxPID].DisplayText.Trim();
 
                     //PID 저장
-                    if(strPID != "") setPid.Add(strPID);
+                    DataRow row =  dtTemp.NewRow();
+                    row["name"] = strPID;
+                    row["cpuName"] = strPLC;
+                    dtTemp.Rows.Add(row);
+
+                    //if(strPID != "") setPid.Add(strPID);
 
                     if (strIO == string.Empty || strPLC == string.Empty)
                     {
@@ -210,15 +280,15 @@ namespace auto_proj.Form
                 }                
                 partIoCountList.Add(partIoCount);
 
-                SavePid(_ws, setPid.GetEnumerator());
+                SavePid(_ws, dtTemp);
             }
             catch (Exception ex)
             {
-                SIDS.Instance.WriteErrorLog(ex.ToString());
+                //SIDS.Instance.WriteErrorLog(ex.ToString());
+                MessageBox.Show(ex.ToString());
             }
         }
-
-        private void SavePid(Worksheet ws, HashSet<string>.Enumerator enumerator)
+        private void SavePid(Worksheet ws, DataTable dt)
         {
             string connectString = SIDS.Instance.MakeConnectionString("DB");
             try
@@ -230,17 +300,20 @@ namespace auto_proj.Form
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
 
-                        while (enumerator.MoveNext())
+                        foreach (var item in dt.Select())
                         {
-                            string pageName = enumerator.Current;
+                            string pageName = item["name"].ToString();
+                            string cpuName = item["cpuName"].ToString();
                             cmd.Parameters.Add("@projId", SqlDbType.Int).Value = project.ProjID;
                             cmd.Parameters.Add("@partName", SqlDbType.NVarChar).Value = ws.Name;
                             cmd.Parameters.Add("@pageName", SqlDbType.NVarChar).Value = pageName;
+                            cmd.Parameters.Add("@cpuName", SqlDbType.NVarChar).Value = cpuName;
 
                             cmd.ExecuteNonQuery();
-
+                            
                             cmd.Parameters.Clear();
                         }
+                      
                     }
                 }
             }catch(Exception ex)
@@ -375,112 +448,7 @@ namespace auto_proj.Form
             }
 
             GetSumIoCount();
-        }
-
-        /* private void GetSumIoCount()
-         {
-             if (project == null) return;
-
-             //int[,] aiSum = new int[project.PlcCount, 1];
-             //int[,] aoSum = new int[project.PlcCount, 1];
-             //int[,] diSum = new int[project.PlcCount, 1];
-             //int[,] doSum = new int[project.PlcCount, 1];
-             int aiTotal = 0, aoTotal = 0, diTotal = 0, doTotal = 0;
-
-             DataRow[] instArr = dtInst.Select();
-             DataRow[] pkgArr = dtPkg.Select();
-             DataRow[] mccArr = dtMcc.Select();
-             DataRow[] hvacArr = dtHvac.Select();
-             DataRow[] tempArr = dtTempSum.Select();
-
-
-             for (int i = 0; i < project.PlcCount; i++)  //cpu  수량만큼  
-             {
-                 tempArr[i]["AI"] = 0;
-                 tempArr[i]["AO"] = 0;
-                 tempArr[i]["DI"] = 0;
-                 tempArr[i]["DO"] = 0;
-             }
-
-
-             if (chkInst.Checked)
-             {
-                 if (instArr.Length < 1) return;
-
-                 for (int i = 0; i < project.PlcCount; i++)  //cpu  수량 만큼  
-                 {
-                     tempArr[i]["AI"] = int.Parse(tempArr[i]["AI"].ToString()) + int.Parse(instArr[i]["AI"].ToString()); aiTotal += int.Parse(instArr[i]["AI"].ToString());
-                     tempArr[i]["AO"] = int.Parse(tempArr[i]["AO"].ToString()) + int.Parse(instArr[i]["AO"].ToString()); aoTotal += int.Parse(instArr[i]["AO"].ToString());
-                     tempArr[i]["DI"] = int.Parse(tempArr[i]["DI"].ToString()) + int.Parse(instArr[i]["DI"].ToString()); diTotal += int.Parse(instArr[i]["DI"].ToString());
-                     tempArr[i]["DO"] = int.Parse(tempArr[i]["DO"].ToString()) + int.Parse(instArr[i]["DO"].ToString()); doTotal += int.Parse(instArr[i]["DO"].ToString());
-
-                 }
-             }
-
-             if (chkPkg.Checked)
-             {
-                 if (pkgArr.Length < 1) return;
-                 for (int i = 0; i < project.PlcCount; i++)  //cpu  수량 만큼  
-                 {
-                     tempArr[i]["AI"] = int.Parse(tempArr[i]["AI"].ToString()) + int.Parse(pkgArr[i]["AI"].ToString()); aiTotal += int.Parse(pkgArr[i]["AI"].ToString());
-                     tempArr[i]["AO"] = int.Parse(tempArr[i]["AO"].ToString()) + int.Parse(pkgArr[i]["AO"].ToString()); aoTotal += int.Parse(pkgArr[i]["AO"].ToString());
-                     tempArr[i]["DI"] = int.Parse(tempArr[i]["DI"].ToString()) + int.Parse(pkgArr[i]["DI"].ToString()); diTotal += int.Parse(pkgArr[i]["DI"].ToString());
-                     tempArr[i]["DO"] = int.Parse(tempArr[i]["DO"].ToString()) + int.Parse(pkgArr[i]["DO"].ToString()); doTotal += int.Parse(pkgArr[i]["DO"].ToString());
-
-                 }
-             }
-
-             if (chkMcc.Checked)
-             {
-                 if (mccArr.Length < 1) return;
-                 for (int i = 0; i < project.PlcCount; i++)  //cpu  수량 만큼  
-                 {
-                     tempArr[i]["AI"] = int.Parse(tempArr[i]["AI"].ToString()) + int.Parse(mccArr[i]["AI"].ToString()); aiTotal += int.Parse(mccArr[i]["AI"].ToString());
-                     tempArr[i]["AO"] = int.Parse(tempArr[i]["AO"].ToString()) + int.Parse(mccArr[i]["AO"].ToString()); aoTotal += int.Parse(mccArr[i]["AO"].ToString());
-                     tempArr[i]["DI"] = int.Parse(tempArr[i]["DI"].ToString()) + int.Parse(mccArr[i]["DI"].ToString()); diTotal += int.Parse(mccArr[i]["DI"].ToString());
-                     tempArr[i]["DO"] = int.Parse(tempArr[i]["DO"].ToString()) + int.Parse(mccArr[i]["DO"].ToString()); doTotal += int.Parse(mccArr[i]["DO"].ToString());
-                 }
-             }
-
-             if (chkHvac.Checked)
-             {
-                 if (hvacArr.Length < 1) return;
-                 for (int i = 0; i < project.PlcCount; i++)  //cpu  수량 만큼  
-                 {
-                     tempArr[i]["AI"] = int.Parse(tempArr[i]["AI"].ToString()) + int.Parse(hvacArr[i]["AI"].ToString()); aiTotal += int.Parse(hvacArr[i]["AI"].ToString());
-                     tempArr[i]["AO"] = int.Parse(tempArr[i]["AO"].ToString()) + int.Parse(hvacArr[i]["AO"].ToString()); aoTotal += int.Parse(hvacArr[i]["AO"].ToString());
-                     tempArr[i]["DI"] = int.Parse(tempArr[i]["DI"].ToString()) + int.Parse(hvacArr[i]["DI"].ToString()); diTotal += int.Parse(hvacArr[i]["DI"].ToString());
-                     tempArr[i]["DO"] = int.Parse(tempArr[i]["DO"].ToString()) + int.Parse(hvacArr[i]["DO"].ToString()); doTotal += int.Parse(hvacArr[i]["DO"].ToString());
-                 }
-             }
-
-             //합계
-             tempArr[project.PlcCount]["AI"] = aiTotal;
-             tempArr[project.PlcCount]["AO"] = aoTotal;
-             tempArr[project.PlcCount]["DI"] = diTotal;
-             tempArr[project.PlcCount]["DO"] = doTotal;
-
-
-             //스페어 
-             tempArr[project.PlcCount + 1]["AI"] = (int)Math.Ceiling(aiTotal * 0.3);
-             tempArr[project.PlcCount + 1]["AO"] = (int)Math.Ceiling(aoTotal * 0.3);
-             tempArr[project.PlcCount + 1]["DI"] = (int)Math.Ceiling(diTotal * 0.3);
-             tempArr[project.PlcCount + 1]["DO"] = (int)Math.Ceiling(doTotal * 0.3);
-
-             //Total
-             tempArr[project.PlcCount + 2]["AI"] = (int)Math.Ceiling(aiTotal + (aiTotal * 0.3));
-             tempArr[project.PlcCount + 2]["AO"] = (int)Math.Ceiling(aoTotal + (aoTotal * 0.3));
-             tempArr[project.PlcCount + 2]["DI"] = (int)Math.Ceiling(diTotal + (diTotal * 0.3));
-             tempArr[project.PlcCount + 2]["DO"] = (int)Math.Ceiling(doTotal + (doTotal * 0.3));
-
-             //module
-             tempArr[project.PlcCount + 3]["AI"] = (int)Math.Ceiling((aiTotal + (aiTotal * 0.3)) / project.AiChannel);
-             tempArr[project.PlcCount + 3]["AO"] = (int)Math.Ceiling((aoTotal + (aoTotal * 0.3)) / project.AoChannel);
-             tempArr[project.PlcCount + 3]["DI"] = (int)Math.Ceiling((diTotal + (diTotal * 0.3)) / project.DiChannel);
-             tempArr[project.PlcCount + 3]["DO"] = (int)Math.Ceiling((doTotal + (doTotal * 0.3)) / project.DoChannel);
-
-             gridTemp.DataSource = dtTempSum;
-         }*/
+        }       
 
         private void GetSumIoCount()
         {
@@ -937,6 +905,96 @@ namespace auto_proj.Form
             string mainTitle = cmbDetailIo.Text.Trim();
             DeleteDetailIoList(project.ProjID, mainTitle);
             SelectDetailIoTitle(project.ProjID);
+        }
+
+        private void InsertDataFromExcel(string path)
+        {
+            string connectString = SIDS.Instance.MakeConnectionString("DB");
+
+            using(SqlConnection conn = new SqlConnection(connectString))
+            {
+                conn.Open();
+                using(SqlCommand cmd = new SqlCommand("dbo.proc_origin_excel_data_delete", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@projId", SqlDbType.Int).Value = this.project.ProjID;
+                    cmd.ExecuteNonQuery();
+                    cmd.Dispose();
+                }
+                conn.Close();
+                conn.Dispose();
+            }
+
+            const int NO = 0;
+            const int PID = 1;
+            const int TAG = 2;
+            const int DESCRIPTION = 3;
+            const int INSTRUMENT_TYPE = 4;
+            const int LOCATION = 5;
+            const int IO_TYPE = 6;
+            const int SYSTEM = 7;
+            const int EXTERNAL_POWER = 8;
+            const int PLC = 9;
+            const int SIGNAL_TYPE = 10;
+            const int REMARK = 11;
+            const int START_ROW = 5;
+
+            using (Workbook wb = new Workbook())
+            {
+                wb.LoadDocument(path);
+                wb.History.IsEnabled = false;
+
+                foreach (var workSheet in wb.Worksheets)
+                {
+                    string sheetName = workSheet.Name;
+
+                    using (SqlConnection conn = new SqlConnection(connectString))
+                    {
+                        conn.Open();
+                        using (SqlCommand cmd = new SqlCommand("dbo.proc_origin_excel_data_insert", conn))
+                        {
+                            for (int i = START_ROW; i <= workSheet.Rows.LastUsedIndex; i++)
+                            {
+                                int no = -1;
+                                int.TryParse(workSheet.Cells[i, NO].DisplayText.Trim(), out no);
+                                string pid = workSheet.Cells[i, PID].DisplayText.Trim();
+                                string tag = workSheet.Cells[i, TAG].DisplayText.Trim();
+                                string desc = workSheet.Cells[i, DESCRIPTION].DisplayText.Trim();
+                                string instType = workSheet.Cells[i, INSTRUMENT_TYPE].DisplayText.Trim();
+                                string location = workSheet.Cells[i, LOCATION].DisplayText.Trim();
+                                string ioType = workSheet.Cells[i, IO_TYPE].DisplayText.Trim();
+                                string exteralPower = workSheet.Cells[i, EXTERNAL_POWER].DisplayText.Trim();
+                                string system = workSheet.Cells[i, SYSTEM].DisplayText.Trim();
+                                string plc = workSheet.Cells[i, PLC].DisplayText.Trim();
+                                string signalType = workSheet.Cells[i, SIGNAL_TYPE].DisplayText.Trim();
+                                string remark = workSheet.Cells[i, REMARK].DisplayText.Trim();
+
+                                if (tag == "") continue;
+
+                                cmd.CommandType = CommandType.StoredProcedure;
+                                cmd.Parameters.Add("@projId", SqlDbType.Int).Value = project.ProjID;
+                                cmd.Parameters.Add("@seqNo", SqlDbType.Int).Value = no;
+                                cmd.Parameters.Add("@partName", SqlDbType.NVarChar).Value = sheetName;
+                                cmd.Parameters.Add("@pid", SqlDbType.NVarChar).Value = pid;
+                                cmd.Parameters.Add("@tag", SqlDbType.NVarChar).Value = tag;
+                                cmd.Parameters.Add("@desc", SqlDbType.NVarChar).Value = desc;
+                                cmd.Parameters.Add("@instType", SqlDbType.NVarChar).Value = instType;
+                                cmd.Parameters.Add("@location", SqlDbType.NVarChar).Value = location;
+                                cmd.Parameters.Add("@ioType", SqlDbType.NVarChar).Value = ioType;
+                                cmd.Parameters.Add("@system", SqlDbType.NVarChar).Value = system;
+                                cmd.Parameters.Add("@exteralPower", SqlDbType.NVarChar).Value = exteralPower;
+                                cmd.Parameters.Add("@plc", SqlDbType.NVarChar).Value = plc;
+                                cmd.Parameters.Add("@signalType", SqlDbType.NVarChar).Value = signalType;
+                                cmd.Parameters.Add("@remark", SqlDbType.NVarChar).Value = remark;
+                                cmd.ExecuteNonQuery();
+                                cmd.Parameters.Clear();
+                            }
+
+                        }
+
+                    }
+                }
+            }
         }
     }
 }

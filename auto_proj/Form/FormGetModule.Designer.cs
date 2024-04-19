@@ -72,32 +72,18 @@ namespace auto_proj.Form
             this.gridColumn7 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn8 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn19 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn21 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn9 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn10 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn11 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn12 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.btnCpu = new DevExpress.XtraEditors.SimpleButton();
-            this.cmbPart = new DevExpress.XtraEditors.ComboBoxEdit();
-            this.simpleButton2 = new DevExpress.XtraEditors.SimpleButton();
-            this.btnDelete = new DevExpress.XtraEditors.SimpleButton();
             this.btnSave = new DevExpress.XtraEditors.SimpleButton();
-            this.gridModuleCount = new DevExpress.XtraGrid.GridControl();
-            this.gridView3 = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.gridColumn13 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gridColumn14 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gridColumn15 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gridColumn16 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gridColumn17 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gridColumn18 = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
             this.groupControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gritTotal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridTemp)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cmbPart.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridModuleCount)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridView3)).BeginInit();
             this.SuspendLayout();
             // 
             // groupControl1
@@ -133,7 +119,7 @@ namespace auto_proj.Form
             this.groupControl1.Controls.Add(this.btnSelect);
             this.groupControl1.Location = new System.Drawing.Point(12, 12);
             this.groupControl1.Name = "groupControl1";
-            this.groupControl1.Size = new System.Drawing.Size(1671, 210);
+            this.groupControl1.Size = new System.Drawing.Size(1324, 210);
             this.groupControl1.TabIndex = 1;
             this.groupControl1.Text = "프로젝트 선택";
             // 
@@ -362,7 +348,7 @@ namespace auto_proj.Form
             this.gritTotal.Location = new System.Drawing.Point(13, 234);
             this.gritTotal.MainView = this.gridView1;
             this.gritTotal.Name = "gritTotal";
-            this.gritTotal.Size = new System.Drawing.Size(837, 160);
+            this.gritTotal.Size = new System.Drawing.Size(1323, 160);
             this.gritTotal.TabIndex = 2;
             this.gritTotal.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView1});
@@ -436,10 +422,10 @@ namespace auto_proj.Form
             // 
             // gridTemp
             // 
-            this.gridTemp.Location = new System.Drawing.Point(12, 488);
+            this.gridTemp.Location = new System.Drawing.Point(12, 413);
             this.gridTemp.MainView = this.gridView2;
             this.gridTemp.Name = "gridTemp";
-            this.gridTemp.Size = new System.Drawing.Size(837, 806);
+            this.gridTemp.Size = new System.Drawing.Size(1324, 537);
             this.gridTemp.TabIndex = 3;
             this.gridTemp.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView2});
@@ -451,6 +437,7 @@ namespace auto_proj.Form
             this.gridColumn7,
             this.gridColumn8,
             this.gridColumn19,
+            this.gridColumn21,
             this.gridColumn9,
             this.gridColumn10,
             this.gridColumn11,
@@ -461,8 +448,8 @@ namespace auto_proj.Form
             // 
             // gridColumn1
             // 
-            this.gridColumn1.Caption = "IDX";
-            this.gridColumn1.FieldName = "IDX";
+            this.gridColumn1.Caption = "CPU_ID";
+            this.gridColumn1.FieldName = "CPU_ID";
             this.gridColumn1.MinWidth = 40;
             this.gridColumn1.Name = "gridColumn1";
             this.gridColumn1.OptionsColumn.AllowEdit = false;
@@ -470,9 +457,11 @@ namespace auto_proj.Form
             // 
             // gridColumn7
             // 
-            this.gridColumn7.FieldName = "TITLE";
+            this.gridColumn7.Caption = "CPU_NAME";
+            this.gridColumn7.FieldName = "CPU_NAME";
             this.gridColumn7.MinWidth = 40;
             this.gridColumn7.Name = "gridColumn7";
+            this.gridColumn7.OptionsColumn.AllowEdit = false;
             this.gridColumn7.OptionsColumn.FixedWidth = true;
             this.gridColumn7.Visible = true;
             this.gridColumn7.VisibleIndex = 0;
@@ -480,22 +469,33 @@ namespace auto_proj.Form
             // 
             // gridColumn8
             // 
-            this.gridColumn8.Caption = "PART";
-            this.gridColumn8.FieldName = "PART";
+            this.gridColumn8.Caption = "PANEL_ID";
+            this.gridColumn8.FieldName = "PANEL_ID";
             this.gridColumn8.MinWidth = 40;
             this.gridColumn8.Name = "gridColumn8";
             this.gridColumn8.OptionsColumn.AllowEdit = false;
-            this.gridColumn8.Visible = true;
-            this.gridColumn8.VisibleIndex = 1;
             this.gridColumn8.Width = 110;
             // 
             // gridColumn19
             // 
-            this.gridColumn19.Caption = "CPU";
-            this.gridColumn19.FieldName = "CPU";
+            this.gridColumn19.Caption = "PANEL_NAME";
+            this.gridColumn19.FieldName = "PANEL_NAME";
             this.gridColumn19.MinWidth = 40;
             this.gridColumn19.Name = "gridColumn19";
-            this.gridColumn19.Width = 150;
+            this.gridColumn19.OptionsColumn.AllowEdit = false;
+            this.gridColumn19.OptionsColumn.FixedWidth = true;
+            this.gridColumn19.Visible = true;
+            this.gridColumn19.VisibleIndex = 1;
+            this.gridColumn19.Width = 300;
+            // 
+            // gridColumn21
+            // 
+            this.gridColumn21.Caption = "PART";
+            this.gridColumn21.FieldName = "PART";
+            this.gridColumn21.MinWidth = 40;
+            this.gridColumn21.Name = "gridColumn21";
+            this.gridColumn21.OptionsColumn.FixedWidth = true;
+            this.gridColumn21.Width = 120;
             // 
             // gridColumn9
             // 
@@ -505,7 +505,7 @@ namespace auto_proj.Form
             this.gridColumn9.Name = "gridColumn9";
             this.gridColumn9.Visible = true;
             this.gridColumn9.VisibleIndex = 2;
-            this.gridColumn9.Width = 110;
+            this.gridColumn9.Width = 86;
             // 
             // gridColumn10
             // 
@@ -515,7 +515,7 @@ namespace auto_proj.Form
             this.gridColumn10.Name = "gridColumn10";
             this.gridColumn10.Visible = true;
             this.gridColumn10.VisibleIndex = 3;
-            this.gridColumn10.Width = 110;
+            this.gridColumn10.Width = 86;
             // 
             // gridColumn11
             // 
@@ -525,7 +525,7 @@ namespace auto_proj.Form
             this.gridColumn11.Name = "gridColumn11";
             this.gridColumn11.Visible = true;
             this.gridColumn11.VisibleIndex = 4;
-            this.gridColumn11.Width = 110;
+            this.gridColumn11.Width = 86;
             // 
             // gridColumn12
             // 
@@ -535,154 +535,23 @@ namespace auto_proj.Form
             this.gridColumn12.Name = "gridColumn12";
             this.gridColumn12.Visible = true;
             this.gridColumn12.VisibleIndex = 5;
-            this.gridColumn12.Width = 114;
-            // 
-            // btnCpu
-            // 
-            this.btnCpu.Location = new System.Drawing.Point(13, 437);
-            this.btnCpu.Name = "btnCpu";
-            this.btnCpu.Size = new System.Drawing.Size(150, 46);
-            this.btnCpu.TabIndex = 4;
-            this.btnCpu.Text = "CPU +";
-            this.btnCpu.Click += new System.EventHandler(this.btnCpu_Click);
-            // 
-            // cmbPart
-            // 
-            this.cmbPart.Location = new System.Drawing.Point(203, 437);
-            this.cmbPart.Name = "cmbPart";
-            this.cmbPart.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.cmbPart.Size = new System.Drawing.Size(146, 44);
-            this.cmbPart.TabIndex = 5;
-            // 
-            // simpleButton2
-            // 
-            this.simpleButton2.Location = new System.Drawing.Point(354, 437);
-            this.simpleButton2.Name = "simpleButton2";
-            this.simpleButton2.Size = new System.Drawing.Size(150, 46);
-            this.simpleButton2.TabIndex = 6;
-            this.simpleButton2.Text = "PANEL +";
-            this.simpleButton2.Click += new System.EventHandler(this.simpleButton2_Click);
-            // 
-            // btnDelete
-            // 
-            this.btnDelete.Location = new System.Drawing.Point(544, 437);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(150, 46);
-            this.btnDelete.TabIndex = 7;
-            this.btnDelete.Text = "Delete";
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            this.gridColumn12.Width = 96;
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(698, 437);
+            this.btnSave.Location = new System.Drawing.Point(1171, 967);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(150, 46);
             this.btnSave.TabIndex = 8;
             this.btnSave.Text = "Save";
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // gridModuleCount
-            // 
-            this.gridModuleCount.Location = new System.Drawing.Point(862, 234);
-            this.gridModuleCount.MainView = this.gridView3;
-            this.gridModuleCount.Name = "gridModuleCount";
-            this.gridModuleCount.Size = new System.Drawing.Size(821, 1060);
-            this.gridModuleCount.TabIndex = 9;
-            this.gridModuleCount.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
-            this.gridView3});
-            // 
-            // gridView3
-            // 
-            this.gridView3.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
-            this.gridColumn13,
-            this.gridColumn14,
-            this.gridColumn15,
-            this.gridColumn16,
-            this.gridColumn17,
-            this.gridColumn18});
-            this.gridView3.GridControl = this.gridModuleCount;
-            this.gridView3.Name = "gridView3";
-            this.gridView3.OptionsView.ShowGroupPanel = false;
-            // 
-            // gridColumn13
-            // 
-            this.gridColumn13.Caption = "TITLE";
-            this.gridColumn13.FieldName = "title";
-            this.gridColumn13.MinWidth = 40;
-            this.gridColumn13.Name = "gridColumn13";
-            this.gridColumn13.OptionsColumn.AllowEdit = false;
-            this.gridColumn13.OptionsColumn.FixedWidth = true;
-            this.gridColumn13.Visible = true;
-            this.gridColumn13.VisibleIndex = 0;
-            this.gridColumn13.Width = 300;
-            // 
-            // gridColumn14
-            // 
-            this.gridColumn14.Caption = "PART";
-            this.gridColumn14.FieldName = "part";
-            this.gridColumn14.MinWidth = 40;
-            this.gridColumn14.Name = "gridColumn14";
-            this.gridColumn14.OptionsColumn.AllowEdit = false;
-            this.gridColumn14.Visible = true;
-            this.gridColumn14.VisibleIndex = 1;
-            this.gridColumn14.Width = 97;
-            // 
-            // gridColumn15
-            // 
-            this.gridColumn15.Caption = "AI";
-            this.gridColumn15.FieldName = "ai_count";
-            this.gridColumn15.MinWidth = 40;
-            this.gridColumn15.Name = "gridColumn15";
-            this.gridColumn15.OptionsColumn.AllowEdit = false;
-            this.gridColumn15.Visible = true;
-            this.gridColumn15.VisibleIndex = 2;
-            this.gridColumn15.Width = 97;
-            // 
-            // gridColumn16
-            // 
-            this.gridColumn16.Caption = "AO";
-            this.gridColumn16.FieldName = "ao_count";
-            this.gridColumn16.MinWidth = 40;
-            this.gridColumn16.Name = "gridColumn16";
-            this.gridColumn16.OptionsColumn.AllowEdit = false;
-            this.gridColumn16.Visible = true;
-            this.gridColumn16.VisibleIndex = 3;
-            this.gridColumn16.Width = 97;
-            // 
-            // gridColumn17
-            // 
-            this.gridColumn17.Caption = "DI";
-            this.gridColumn17.FieldName = "di_count";
-            this.gridColumn17.MinWidth = 40;
-            this.gridColumn17.Name = "gridColumn17";
-            this.gridColumn17.OptionsColumn.AllowEdit = false;
-            this.gridColumn17.Visible = true;
-            this.gridColumn17.VisibleIndex = 4;
-            this.gridColumn17.Width = 97;
-            // 
-            // gridColumn18
-            // 
-            this.gridColumn18.Caption = "DO";
-            this.gridColumn18.FieldName = "do_count";
-            this.gridColumn18.MinWidth = 40;
-            this.gridColumn18.Name = "gridColumn18";
-            this.gridColumn18.OptionsColumn.AllowEdit = false;
-            this.gridColumn18.Visible = true;
-            this.gridColumn18.VisibleIndex = 5;
-            this.gridColumn18.Width = 97;
-            // 
             // FormGetModule
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 29F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1708, 1306);
-            this.Controls.Add(this.gridModuleCount);
+            this.ClientSize = new System.Drawing.Size(1355, 1048);
             this.Controls.Add(this.btnSave);
-            this.Controls.Add(this.btnDelete);
-            this.Controls.Add(this.simpleButton2);
-            this.Controls.Add(this.cmbPart);
-            this.Controls.Add(this.btnCpu);
             this.Controls.Add(this.gridTemp);
             this.Controls.Add(this.gritTotal);
             this.Controls.Add(this.groupControl1);
@@ -696,9 +565,6 @@ namespace auto_proj.Form
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridTemp)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cmbPart.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridModuleCount)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridView3)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -744,26 +610,15 @@ namespace auto_proj.Form
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn6;
         private DevExpress.XtraGrid.GridControl gridTemp;
         private DevExpress.XtraGrid.Views.Grid.GridView gridView2;
-        private DevExpress.XtraEditors.SimpleButton btnCpu;
-        private DevExpress.XtraEditors.ComboBoxEdit cmbPart;
-        private DevExpress.XtraEditors.SimpleButton simpleButton2;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn7;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn8;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn9;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn10;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn11;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn12;
-        private DevExpress.XtraEditors.SimpleButton btnDelete;
         private DevExpress.XtraEditors.SimpleButton btnSave;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn1;
-        private DevExpress.XtraGrid.GridControl gridModuleCount;
-        private DevExpress.XtraGrid.Views.Grid.GridView gridView3;
-        private DevExpress.XtraGrid.Columns.GridColumn gridColumn13;
-        private DevExpress.XtraGrid.Columns.GridColumn gridColumn14;
-        private DevExpress.XtraGrid.Columns.GridColumn gridColumn15;
-        private DevExpress.XtraGrid.Columns.GridColumn gridColumn16;
-        private DevExpress.XtraGrid.Columns.GridColumn gridColumn17;
-        private DevExpress.XtraGrid.Columns.GridColumn gridColumn18;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn19;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn21;
     }
 }

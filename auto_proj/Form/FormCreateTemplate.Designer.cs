@@ -1,7 +1,7 @@
 ﻿
 namespace auto_proj.Form
 {
-    partial class FormPLCConfigcs
+    partial class listProcess
     {
         /// <summary>
         /// Required designer variable.
@@ -59,34 +59,10 @@ namespace auto_proj.Form
             this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             this.btnSelect = new DevExpress.XtraEditors.SimpleButton();
-            this.gridCpuPanel = new DevExpress.XtraGrid.GridControl();
-            this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.CPU_ID = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.CPU_NAME = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.PART = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.PANEL_ID = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gridColumn5 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gridColumn6 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gridColumn7 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gridColumn8 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gridColumn9 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.btnSorting = new DevExpress.XtraEditors.SimpleButton();
-            this.txtSorting1 = new DevExpress.XtraEditors.TextEdit();
-            this.groupControl2 = new DevExpress.XtraEditors.GroupControl();
-            this.labelControl13 = new DevExpress.XtraEditors.LabelControl();
-            this.txtSorting3 = new DevExpress.XtraEditors.TextEdit();
-            this.labelControl12 = new DevExpress.XtraEditors.LabelControl();
-            this.txtSorting2 = new DevExpress.XtraEditors.TextEdit();
-            this.labelControl11 = new DevExpress.XtraEditors.LabelControl();
+            this.btnCreate = new DevExpress.XtraEditors.SimpleButton();
+            this.listBox1 = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
             this.groupControl1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gridCpuPanel)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtSorting1.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).BeginInit();
-            this.groupControl2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.txtSorting3.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtSorting2.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // groupControl1
@@ -120,11 +96,11 @@ namespace auto_proj.Form
             this.groupControl1.Controls.Add(this.labelControl2);
             this.groupControl1.Controls.Add(this.labelControl1);
             this.groupControl1.Controls.Add(this.btnSelect);
-            this.groupControl1.Location = new System.Drawing.Point(6, 6);
+            this.groupControl1.Location = new System.Drawing.Point(1, 1);
             this.groupControl1.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.groupControl1.Name = "groupControl1";
             this.groupControl1.Size = new System.Drawing.Size(1319, 209);
-            this.groupControl1.TabIndex = 1;
+            this.groupControl1.TabIndex = 2;
             this.groupControl1.Text = "프로젝트 선택";
             // 
             // txtAoCh
@@ -376,224 +352,37 @@ namespace auto_proj.Form
             this.btnSelect.Text = "프로젝트";
             this.btnSelect.Click += new System.EventHandler(this.btnSelect_Click);
             // 
-            // gridCpuPanel
+            // btnCreate
             // 
-            this.gridCpuPanel.Location = new System.Drawing.Point(6, 260);
-            this.gridCpuPanel.MainView = this.gridView1;
-            this.gridCpuPanel.Name = "gridCpuPanel";
-            this.gridCpuPanel.Size = new System.Drawing.Size(1319, 270);
-            this.gridCpuPanel.TabIndex = 6;
-            this.gridCpuPanel.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
-            this.gridView1});
+            this.btnCreate.Location = new System.Drawing.Point(12, 236);
+            this.btnCreate.Name = "btnCreate";
+            this.btnCreate.Size = new System.Drawing.Size(203, 46);
+            this.btnCreate.TabIndex = 3;
+            this.btnCreate.Text = "Template 생성";
+            this.btnCreate.Click += new System.EventHandler(this.btnCreate_Click);
             // 
-            // gridView1
+            // listBox1
             // 
-            this.gridView1.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
-            this.CPU_ID,
-            this.CPU_NAME,
-            this.PART,
-            this.PANEL_ID,
-            this.gridColumn5,
-            this.gridColumn6,
-            this.gridColumn7,
-            this.gridColumn8,
-            this.gridColumn9});
-            this.gridView1.GridControl = this.gridCpuPanel;
-            this.gridView1.Name = "gridView1";
-            this.gridView1.OptionsView.ShowGroupPanel = false;
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.ItemHeight = 29;
+            this.listBox1.Location = new System.Drawing.Point(12, 300);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(1041, 700);
+            this.listBox1.TabIndex = 4;
             // 
-            // CPU_ID
-            // 
-            this.CPU_ID.Caption = "CPU_ID";
-            this.CPU_ID.FieldName = "cpu_id";
-            this.CPU_ID.MinWidth = 40;
-            this.CPU_ID.Name = "CPU_ID";
-            this.CPU_ID.OptionsColumn.AllowEdit = false;
-            this.CPU_ID.Width = 181;
-            // 
-            // CPU_NAME
-            // 
-            this.CPU_NAME.Caption = "CPU_NAME";
-            this.CPU_NAME.FieldName = "cpu_name";
-            this.CPU_NAME.MinWidth = 40;
-            this.CPU_NAME.Name = "CPU_NAME";
-            this.CPU_NAME.OptionsColumn.AllowEdit = false;
-            this.CPU_NAME.Visible = true;
-            this.CPU_NAME.VisibleIndex = 0;
-            this.CPU_NAME.Width = 391;
-            // 
-            // PART
-            // 
-            this.PART.Caption = "PART";
-            this.PART.FieldName = "part";
-            this.PART.MinWidth = 40;
-            this.PART.Name = "PART";
-            this.PART.OptionsColumn.AllowEdit = false;
-            this.PART.OptionsColumn.FixedWidth = true;
-            this.PART.Width = 120;
-            // 
-            // PANEL_ID
-            // 
-            this.PANEL_ID.Caption = "PANEL_ID";
-            this.PANEL_ID.FieldNameSortGroup = "panel_id";
-            this.PANEL_ID.MinWidth = 40;
-            this.PANEL_ID.Name = "PANEL_ID";
-            this.PANEL_ID.OptionsColumn.AllowEdit = false;
-            this.PANEL_ID.Width = 181;
-            // 
-            // gridColumn5
-            // 
-            this.gridColumn5.Caption = "PANEL_NAME";
-            this.gridColumn5.FieldName = "panel_name";
-            this.gridColumn5.MinWidth = 40;
-            this.gridColumn5.Name = "gridColumn5";
-            this.gridColumn5.OptionsColumn.AllowEdit = false;
-            this.gridColumn5.Visible = true;
-            this.gridColumn5.VisibleIndex = 1;
-            this.gridColumn5.Width = 492;
-            // 
-            // gridColumn6
-            // 
-            this.gridColumn6.Caption = "AI";
-            this.gridColumn6.FieldName = "ai_count";
-            this.gridColumn6.MinWidth = 40;
-            this.gridColumn6.Name = "gridColumn6";
-            this.gridColumn6.OptionsColumn.AllowEdit = false;
-            this.gridColumn6.OptionsColumn.FixedWidth = true;
-            this.gridColumn6.Visible = true;
-            this.gridColumn6.VisibleIndex = 2;
-            this.gridColumn6.Width = 70;
-            // 
-            // gridColumn7
-            // 
-            this.gridColumn7.Caption = "AO";
-            this.gridColumn7.FieldName = "ao_count";
-            this.gridColumn7.MinWidth = 40;
-            this.gridColumn7.Name = "gridColumn7";
-            this.gridColumn7.OptionsColumn.AllowEdit = false;
-            this.gridColumn7.OptionsColumn.FixedWidth = true;
-            this.gridColumn7.Visible = true;
-            this.gridColumn7.VisibleIndex = 3;
-            this.gridColumn7.Width = 70;
-            // 
-            // gridColumn8
-            // 
-            this.gridColumn8.Caption = "DI";
-            this.gridColumn8.FieldName = "di_count";
-            this.gridColumn8.MinWidth = 40;
-            this.gridColumn8.Name = "gridColumn8";
-            this.gridColumn8.OptionsColumn.AllowEdit = false;
-            this.gridColumn8.OptionsColumn.FixedWidth = true;
-            this.gridColumn8.Visible = true;
-            this.gridColumn8.VisibleIndex = 4;
-            this.gridColumn8.Width = 70;
-            // 
-            // gridColumn9
-            // 
-            this.gridColumn9.Caption = "DO";
-            this.gridColumn9.FieldName = "do_count";
-            this.gridColumn9.MinWidth = 40;
-            this.gridColumn9.Name = "gridColumn9";
-            this.gridColumn9.OptionsColumn.AllowEdit = false;
-            this.gridColumn9.OptionsColumn.FixedWidth = true;
-            this.gridColumn9.Visible = true;
-            this.gridColumn9.VisibleIndex = 5;
-            this.gridColumn9.Width = 70;
-            // 
-            // btnSorting
-            // 
-            this.btnSorting.Location = new System.Drawing.Point(134, 385);
-            this.btnSorting.Name = "btnSorting";
-            this.btnSorting.Size = new System.Drawing.Size(150, 46);
-            this.btnSorting.TabIndex = 8;
-            this.btnSorting.Text = "Save";
-            this.btnSorting.Click += new System.EventHandler(this.btnSorting_Click);
-            // 
-            // txtSorting1
-            // 
-            this.txtSorting1.Location = new System.Drawing.Point(12, 110);
-            this.txtSorting1.Name = "txtSorting1";
-            this.txtSorting1.Size = new System.Drawing.Size(404, 44);
-            this.txtSorting1.TabIndex = 9;
-            // 
-            // groupControl2
-            // 
-            this.groupControl2.Controls.Add(this.labelControl13);
-            this.groupControl2.Controls.Add(this.txtSorting3);
-            this.groupControl2.Controls.Add(this.labelControl12);
-            this.groupControl2.Controls.Add(this.txtSorting2);
-            this.groupControl2.Controls.Add(this.labelControl11);
-            this.groupControl2.Controls.Add(this.txtSorting1);
-            this.groupControl2.Controls.Add(this.btnSorting);
-            this.groupControl2.Location = new System.Drawing.Point(1333, 6);
-            this.groupControl2.Name = "groupControl2";
-            this.groupControl2.Size = new System.Drawing.Size(444, 458);
-            this.groupControl2.TabIndex = 10;
-            this.groupControl2.Text = "정렬조건";
-            this.groupControl2.Visible = false;
-            // 
-            // labelControl13
-            // 
-            this.labelControl13.Location = new System.Drawing.Point(12, 277);
-            this.labelControl13.Name = "labelControl13";
-            this.labelControl13.Size = new System.Drawing.Size(55, 29);
-            this.labelControl13.TabIndex = 14;
-            this.labelControl13.Text = "조건3";
-            // 
-            // txtSorting3
-            // 
-            this.txtSorting3.Location = new System.Drawing.Point(12, 316);
-            this.txtSorting3.Name = "txtSorting3";
-            this.txtSorting3.Size = new System.Drawing.Size(404, 44);
-            this.txtSorting3.TabIndex = 13;
-            // 
-            // labelControl12
-            // 
-            this.labelControl12.Location = new System.Drawing.Point(12, 170);
-            this.labelControl12.Name = "labelControl12";
-            this.labelControl12.Size = new System.Drawing.Size(55, 29);
-            this.labelControl12.TabIndex = 12;
-            this.labelControl12.Text = "조건2";
-            // 
-            // txtSorting2
-            // 
-            this.txtSorting2.Location = new System.Drawing.Point(12, 209);
-            this.txtSorting2.Name = "txtSorting2";
-            this.txtSorting2.Size = new System.Drawing.Size(404, 44);
-            this.txtSorting2.TabIndex = 11;
-            // 
-            // labelControl11
-            // 
-            this.labelControl11.Location = new System.Drawing.Point(12, 71);
-            this.labelControl11.Name = "labelControl11";
-            this.labelControl11.Size = new System.Drawing.Size(55, 29);
-            this.labelControl11.TabIndex = 10;
-            this.labelControl11.Text = "조건1";
-            // 
-            // FormPLCConfigcs
+            // listProcess
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 29F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(2017, 1498);
-            this.Controls.Add(this.groupControl2);
-            this.Controls.Add(this.gridCpuPanel);
+            this.ClientSize = new System.Drawing.Size(2439, 1390);
+            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.btnCreate);
             this.Controls.Add(this.groupControl1);
-            this.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
-            this.Name = "FormPLCConfigcs";
-            this.Text = "FormPLCConfigcs";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.Load += new System.EventHandler(this.FormPLCConfigcs_Load);
+            this.Name = "listProcess";
+            this.Text = "Template 생성";
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).EndInit();
             this.groupControl1.ResumeLayout(false);
             this.groupControl1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gridCpuPanel)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtSorting1.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).EndInit();
-            this.groupControl2.ResumeLayout(false);
-            this.groupControl2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.txtSorting3.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtSorting2.Properties)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -630,24 +419,7 @@ namespace auto_proj.Form
         private DevExpress.XtraEditors.LabelControl labelControl2;
         private DevExpress.XtraEditors.LabelControl labelControl1;
         private DevExpress.XtraEditors.SimpleButton btnSelect;
-        private DevExpress.XtraGrid.GridControl gridCpuPanel;
-        private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
-        private DevExpress.XtraGrid.Columns.GridColumn CPU_NAME;
-        private DevExpress.XtraGrid.Columns.GridColumn CPU_ID;
-        private DevExpress.XtraGrid.Columns.GridColumn PART;
-        private DevExpress.XtraGrid.Columns.GridColumn PANEL_ID;
-        private DevExpress.XtraGrid.Columns.GridColumn gridColumn5;
-        private DevExpress.XtraGrid.Columns.GridColumn gridColumn6;
-        private DevExpress.XtraGrid.Columns.GridColumn gridColumn7;
-        private DevExpress.XtraGrid.Columns.GridColumn gridColumn8;
-        private DevExpress.XtraGrid.Columns.GridColumn gridColumn9;
-        private DevExpress.XtraEditors.SimpleButton btnSorting;
-        private DevExpress.XtraEditors.TextEdit txtSorting1;
-        private DevExpress.XtraEditors.GroupControl groupControl2;
-        private DevExpress.XtraEditors.LabelControl labelControl13;
-        private DevExpress.XtraEditors.TextEdit txtSorting3;
-        private DevExpress.XtraEditors.LabelControl labelControl12;
-        private DevExpress.XtraEditors.TextEdit txtSorting2;
-        private DevExpress.XtraEditors.LabelControl labelControl11;
+        private DevExpress.XtraEditors.SimpleButton btnCreate;
+        private System.Windows.Forms.ListBox listBox1;
     }
 }

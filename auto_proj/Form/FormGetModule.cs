@@ -22,24 +22,23 @@ namespace auto_proj.Form
         Project project = null;
         PopupSelectProj selectProj = null;
         DataTable dtModuleCount = null;
-        DataTable dtTemp = null;
-        DataTable dtSelected = null;
-        int clickedRow = 0;
+        DataTable dtTemp = null;       
+       // int clickedRow = 0;
         int deleteRow = 0;
-        int cpuNumber = 0;
+       // int cpuNumber = 0;
 
         public FormGetModule()
         {
             InitializeComponent();
         }
 
-        private void btnSelect_Click(object sender, EventArgs e)
-        {
-            selectProj = new PopupSelectProj();
-            selectProj.SelectedProj += SelectProj_SelectedProj;
-            selectProj.ShowDialog();
-            selectProj.SelectedProj -= SelectProj_SelectedProj;           
-        }
+        //private void btnSelect_Click(object sender, EventArgs e)
+        //{
+        //    selectProj = new PopupSelectProj();
+        //    selectProj.SelectedProj += SelectProj_SelectedProj;
+        //    selectProj.ShowDialog();
+        //    selectProj.SelectedProj -= SelectProj_SelectedProj;           
+        //}
 
         private void SelectProj_SelectedProj(object sender, EventArgs e)
         {
@@ -84,43 +83,33 @@ namespace auto_proj.Form
 
         private void SelectModuleCount(int projID)
         {
-            if(dtSelected != null) dtSelected.Clear();
+            dtTemp.Rows.Clear();
             string connectString = SIDS.Instance.MakeConnectionString("DB");
             using(SqlConnection conn = new SqlConnection(connectString))
             {
                 conn.Open();
-                using (SqlCommand cmd = new SqlCommand("proc_select_module", conn))
+                using (SqlCommand cmd = new SqlCommand("dbo.proc_select_cpu_panel", conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add("@proj_id", SqlDbType.Int).Value = project.ProjID;
+                    cmd.Parameters.Add("@projId", SqlDbType.Int).Value = project.ProjID;
                     SqlDataReader reader = cmd.ExecuteReader();
-
-                    dtSelected = new DataTable();
-                    dtSelected.Load(reader);
-
-                   /* while (reader.Read())
+                    while(reader.Read())
                     {
-                        DataRow row = dtSelected.NewRow();
-                        row["TITLE"] = reader["title"].ToString();
-                        
-                        string part = reader["PART"].ToString();
-                        if (part == "CPU")
-                        {
-                            row["PART"] = part;                           
-                        }
-                        else
-                        {
-                            row["PART"] = part;
-                            row["AI"] = int.Parse(reader["ai_count"].ToString());
-                            row["AO"] = int.Parse(reader["ao_count"].ToString());
-                            row["DI"] = int.Parse(reader["di_count"].ToString());
-                            row["DO"] = int.Parse(reader["do_count"].ToString());
-                        }
+                        DataRow row = dtTemp.NewRow();
+                        row["CPU_ID"] = reader["cpu_id"].ToString();
+                        row["CPU_NAME"] = reader["cpu_name"].ToString();
+                        row["PANEL_ID"] = reader["panel_id"].ToString();
+                        row["PANEL_NAME"] = reader["panel_name"].ToString();
+                        row["PART"] = reader["part"].ToString();
+                        row["AI"] = reader["ai_count"].ToString();
+                        row["AO"] = reader["ao_count"].ToString();
+                        row["DI"] = reader["di_count"].ToString();
+                        row["DO"] = reader["do_count"].ToString();
 
-                        dtSelected.Rows.Add(row);
-                    }*/
+                        dtTemp.Rows.Add(row);
+                    }
 
-                    gridModuleCount.DataSource = dtSelected;
+                    gridTemp.DataSource = dtTemp;
                 }
 
             }
@@ -136,36 +125,36 @@ namespace auto_proj.Form
 
         private void GridView1_Click(object sender, EventArgs e)
         {
-            DXMouseEventArgs ea = e as DXMouseEventArgs;
-            GridView view = (GridView)sender;
-            GridHitInfo info = view.CalcHitInfo(ea.Location);
-            clickedRow = info.RowHandle;
+            //DXMouseEventArgs ea = e as DXMouseEventArgs;
+            //GridView view = (GridView)sender;
+            //GridHitInfo info = view.CalcHitInfo(ea.Location);
+            //clickedRow = info.RowHandle;
 
-            if (info.InRow || info.InRowCell)
-            {
-                DataRow row = view.GetDataRow(info.RowHandle);
+            //if (info.InRow || info.InRowCell)
+            //{
+            //    DataRow row = view.GetDataRow(info.RowHandle);
 
-                string title = row["MAIN_TITLE"].ToString();
-                int _ai = int.Parse(row["AI"].ToString());
-                int _ao = int.Parse(row["AO"].ToString());
-                int _di = int.Parse(row["DI"].ToString());
-                int _do = int.Parse(row["DO"].ToString());
+            //    string title = row["MAIN_TITLE"].ToString();
+            //    int _ai = int.Parse(row["AI"].ToString());
+            //    int _ao = int.Parse(row["AO"].ToString());
+            //    int _di = int.Parse(row["DI"].ToString());
+            //    int _do = int.Parse(row["DO"].ToString());
 
-                if (title != "")
-                {
-                    string[] splited = title.Split(' ');
-                    cmbPart.Properties.Items.Clear();
-                    foreach (string s in splited)
-                    {
-                        cmbPart.Properties.Items.Add(s);
-                    }
+            //    if (title != "")
+            //    {
+            //        string[] splited = title.Split(' ');
+            //        cmbPart.Properties.Items.Clear();
+            //        foreach (string s in splited)
+            //        {
+            //            cmbPart.Properties.Items.Add(s);
+            //        }
 
-                    if (cmbPart.Properties.Items.Count > 0)
-                    {
-                        cmbPart.SelectedIndex = 0;
-                    }
-                }
-            }
+            //        if (cmbPart.Properties.Items.Count > 0)
+            //        {
+            //            cmbPart.SelectedIndex = 0;
+            //        }
+            //    }
+            //}
         }
 
         private void GetProjectIoCount(int projId)
@@ -228,19 +217,16 @@ namespace auto_proj.Form
                 dtModuleCount.Columns.Add(column5);
             }
             {
-                dtTemp = new DataTable();
-                DataColumn column1 = new DataColumn();
-                column1.DataType = typeof(int);
-                column1.ColumnName = "IDX";
-                column1.AutoIncrement = true;
-
-                DataColumn column2 = new DataColumn("TITLE", typeof(string));
-                DataColumn column3 = new DataColumn("PART", typeof(string));
-                DataColumn column4 = new DataColumn("CPU", typeof(int));
-                DataColumn column5 = new DataColumn("AI", typeof(int));
-                DataColumn column6 = new DataColumn("AO", typeof(int));
-                DataColumn column7 = new DataColumn("DI", typeof(int));
-                DataColumn column8 = new DataColumn("DO", typeof(int));
+                dtTemp = new DataTable();                
+                DataColumn column1 = new DataColumn("CPU_ID", typeof(int));
+                DataColumn column2 = new DataColumn("CPU_NAME", typeof(string));
+                DataColumn column3 = new DataColumn("PANEL_ID", typeof(int));
+                DataColumn column4 = new DataColumn("PANEL_NAME", typeof(string));
+                DataColumn column5 = new DataColumn("PART", typeof(string));                
+                DataColumn column6 = new DataColumn("AI", typeof(int));
+                DataColumn column7 = new DataColumn("AO", typeof(int));
+                DataColumn column8 = new DataColumn("DI", typeof(int));
+                DataColumn column9 = new DataColumn("DO", typeof(int));
 
                 dtTemp.Columns.Add(column1);
                 dtTemp.Columns.Add(column2);
@@ -250,39 +236,13 @@ namespace auto_proj.Form
                 dtTemp.Columns.Add(column6);
                 dtTemp.Columns.Add(column7);
                 dtTemp.Columns.Add(column8);
+                dtTemp.Columns.Add(column9);
             }
-            //{
-            //    dtSelected = new DataTable();
-            //    DataColumn column1 = new DataColumn("TITLE", typeof(string));
-            //    DataColumn column2 = new DataColumn("PART", typeof(string));
-            //    DataColumn column3 = new DataColumn("AI", typeof(int));
-            //    DataColumn column4 = new DataColumn("AO", typeof(int));
-            //    DataColumn column5 = new DataColumn("DI", typeof(int));
-            //    DataColumn column6 = new DataColumn("DO", typeof(int));
-            //    dtSelected.Columns.Add(column1);
-            //    dtSelected.Columns.Add(column2);
-            //    dtSelected.Columns.Add(column3);
-            //    dtSelected.Columns.Add(column4);
-            //    dtSelected.Columns.Add(column5);
-            //    dtSelected.Columns.Add(column6);
-            //}
+   
         }
 
         private void btnCpu_Click(object sender, EventArgs e)
         {
-            if (project == null) return;
-            if (cmbPart.Text == "") return;
-
-            DataRow row = dtTemp.NewRow();
-            //int num = FindCpuIndexFromDtTemp();
-            cpuNumber++;
-            row["TITLE"] = $"{project.ProjCode}-CPU{0}-100";
-            row["PART"] = "CPU";
-            row["CPU"] = cpuNumber;
-           
-           
-            dtTemp.Rows.Add(row);
-            gridTemp.DataSource = dtTemp;
         }
 
         private int FindCpuIndexFromDtTemp()
@@ -292,90 +252,41 @@ namespace auto_proj.Form
             
         }
 
-        private void simpleButton2_Click(object sender, EventArgs e)
-        {
-            if (project == null) return;
-            if (cmbPart.Text == "") return;
-
-            DataRow row = dtTemp.NewRow();
-            row["TITLE"] = $"{project.ProjCode}-PLC{clickedRow + 1}-100";
-            row["PART"] = cmbPart.Text;
-            row["CPU"] = cpuNumber;
-            row["AI"] = 0;
-            row["AO"] = 0;
-            row["DI"] = 0;
-            row["DO"] = 0;
-            dtTemp.Rows.Add(row);
-            gridTemp.DataSource = dtTemp;
-
-
-        }
-
-        private void btnDelete_Click(object sender, EventArgs e)
-        {
-            DataRow row = gridView2.GetDataRow(deleteRow);
-            SelectModuleCount(project.ProjID);
-            if (row["PART"].ToString() == "CPU") cpuNumber--;
-            dtTemp.Rows.Remove(row);
-        }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
             if (project == null) return;
-                       
-            string connectString = SIDS.Instance.MakeConnectionString("DB");
+            
+            DataRow[] rows = dtTemp.Select();
 
+            string connectString = SIDS.Instance.MakeConnectionString("DB");
 
             using (SqlConnection conn = new SqlConnection(connectString))
             {
                 conn.Open();
                 //먼저 삭제
-                using (SqlCommand cmd = new SqlCommand("proc_delete_module", conn))
-                {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add("@proj_id", SqlDbType.Int).Value = project.ProjID;
-                    cmd.ExecuteNonQuery();
-                }
-
-
-                using (SqlCommand cmd = new SqlCommand("proc_save_module", conn))
+                using (SqlCommand cmd = new SqlCommand("dbo.proc_module_count_insert", conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    var rows = dtTemp.Select();
                     foreach (var item in rows)
                     {
-                        cmd.Parameters.Add("@proj_id", SqlDbType.Int).Value = project.ProjID;
-                        cmd.Parameters.Add("@cpu", SqlDbType.Int).Value = item["CPU"];
-                        cmd.Parameters.Add("@title", SqlDbType.NVarChar).Value = item["TITLE"].ToString();
-                        cmd.Parameters.Add("@part", SqlDbType.NVarChar).Value = item["PART"].ToString();
-                        
-                        if(item["PART"].ToString() == "CPU")
-                        {
-                            cmd.Parameters.Add("@ai_count", SqlDbType.Int).Value = 0;
-                            cmd.Parameters.Add("@ao_count", SqlDbType.Int).Value = 0;
-                            cmd.Parameters.Add("@di_count", SqlDbType.Int).Value = 0;
-                            cmd.Parameters.Add("@do_count", SqlDbType.Int).Value = 0;
-                        }
-                        else
-                        {
-                            cmd.Parameters.Add("@ai_count", SqlDbType.Int).Value = item["AI"].ToString() == "" ? 0 : int.Parse(item["AI"].ToString());
-                            cmd.Parameters.Add("@ao_count", SqlDbType.Int).Value = item["AO"].ToString() == "" ? 0 : int.Parse(item["AO"].ToString());
-                            cmd.Parameters.Add("@di_count", SqlDbType.Int).Value = item["DI"].ToString() == "" ? 0 : int.Parse(item["DI"].ToString());
-                            cmd.Parameters.Add("@do_count", SqlDbType.Int).Value = item["DO"].ToString() == "" ? 0 : int.Parse(item["DO"].ToString());
-                        }
-                        
+                        cmd.Parameters.Add("@projId", SqlDbType.Int).Value = project.ProjID;
+                        cmd.Parameters.Add("@cpuId", SqlDbType.Int).Value = item["CPU_ID"];
+                        cmd.Parameters.Add("@panelId", SqlDbType.Int).Value = item["PANEL_ID"];
+                        cmd.Parameters.Add("@part", SqlDbType.NVarChar).Value = item["PART"];
+                        cmd.Parameters.Add("@aiCount", SqlDbType.Int).Value = item["AI"];
+                        cmd.Parameters.Add("@aoCount", SqlDbType.Int).Value = item["AO"];
+                        cmd.Parameters.Add("@diCount", SqlDbType.Int).Value = item["DI"];
+                        cmd.Parameters.Add("@doCount", SqlDbType.Int).Value = item["DO"];
                         cmd.ExecuteNonQuery();
-
                         cmd.Parameters.Clear();
                     }
-
-                    SelectModuleCount(project.ProjID);
-
+                    
                 }
 
+            }
 
-            }           
         }
     }
 }

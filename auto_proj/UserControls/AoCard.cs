@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using auto_proj.Enum;
 
 namespace auto_proj.UserControls
 {
@@ -17,16 +18,12 @@ namespace auto_proj.UserControls
             InitializeComponent();
         }
 
-         public AoCard(string cardName, int channel) :base(cardName, channel)
-        {
-        
-        }
-
-         public AoCard(int cardId, string cardName, int projId, int panelId, int plcId, int rackId, int railId, int slotId)
-            :base(cardId, cardName, projId, panelId, plcId, rackId, railId, slotId)
+        public AoCard(IO_TYPE type, int projId, int cpuId, int panelId, int rack, int rail, int slot, int channel)
+            :base( type,  projId,  cpuId,  panelId,  rack,  rail,  slot, channel)
         {
 	
-        }
+        }        
+
 
     }
 }

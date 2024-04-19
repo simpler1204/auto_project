@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace auto_proj.Enum
 {
-    public enum IO_DIVIDE
+    public enum IO_TYPE
     {
         AI,
         AO,

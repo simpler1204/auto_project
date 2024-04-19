@@ -94,8 +94,25 @@ namespace auto_proj
 
         private void subPanelConfig_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-           FormPLCConfigcs config = new FormPLCConfigcs();
-            OpenForm(config, typeof(FormPLCConfigcs));
+
+           FormPLCConfigcs config = null;
+           OpenForm(config, typeof(FormPLCConfigcs));
+        }
+
+        private void subCpuPanel_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            FormCpuPanelDefine form = null;
+            OpenForm(form, typeof(FormCpuPanelDefine));
+        }
+
+        private void barSorting_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+        }
+
+        private void barTemplate_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            listProcess form = null;
+            OpenForm(form, typeof(listProcess));
         }
     }
 }

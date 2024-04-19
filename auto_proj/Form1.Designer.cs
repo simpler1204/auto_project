@@ -40,6 +40,7 @@ namespace auto_proj
             this.barSubItem2 = new DevExpress.XtraBars.BarSubItem();
             this.subCreationProj = new DevExpress.XtraBars.BarButtonItem();
             this.subIOCount = new DevExpress.XtraBars.BarButtonItem();
+            this.subCpuPanel = new DevExpress.XtraBars.BarButtonItem();
             this.subModule = new DevExpress.XtraBars.BarButtonItem();
             this.subPanelConfig = new DevExpress.XtraBars.BarButtonItem();
             this.barSubItem3 = new DevExpress.XtraBars.BarSubItem();
@@ -51,6 +52,8 @@ namespace auto_proj
             this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
             this.subCreateProj = new DevExpress.XtraBars.BarButtonItem();
             this.barSubItem1 = new DevExpress.XtraBars.BarSubItem();
+            this.barSorting = new DevExpress.XtraBars.BarButtonItem();
+            this.barTemplate = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -85,9 +88,12 @@ namespace auto_proj
             this.subIOCount,
             this.subCustomer,
             this.subHmiBrand,
-            this.subModule});
+            this.subModule,
+            this.subCpuPanel,
+            this.barSorting,
+            this.barTemplate});
             this.barManager1.MainMenu = this.bar3;
-            this.barManager1.MaxItemId = 22;
+            this.barManager1.MaxItemId = 25;
             // 
             // bar3
             // 
@@ -142,8 +148,10 @@ namespace auto_proj
             this.barSubItem2.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(this.subCreationProj),
             new DevExpress.XtraBars.LinkPersistInfo(this.subIOCount),
+            new DevExpress.XtraBars.LinkPersistInfo(this.subCpuPanel),
             new DevExpress.XtraBars.LinkPersistInfo(this.subModule),
-            new DevExpress.XtraBars.LinkPersistInfo(this.subPanelConfig)});
+            new DevExpress.XtraBars.LinkPersistInfo(this.subPanelConfig),
+            new DevExpress.XtraBars.LinkPersistInfo(this.barTemplate)});
             this.barSubItem2.Name = "barSubItem2";
             // 
             // subCreationProj
@@ -155,10 +163,17 @@ namespace auto_proj
             // 
             // subIOCount
             // 
-            this.subIOCount.Caption = "SYSTEM 구성안 IO 수량";
+            this.subIOCount.Caption = "System 구성안 IO 수량";
             this.subIOCount.Id = 18;
             this.subIOCount.Name = "subIOCount";
             this.subIOCount.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.subIOCount_ItemClick);
+            // 
+            // subCpuPanel
+            // 
+            this.subCpuPanel.Caption = "Cpu Panel 정의";
+            this.subCpuPanel.Id = 22;
+            this.subCpuPanel.Name = "subCpuPanel";
+            this.subCpuPanel.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.subCpuPanel_ItemClick);
             // 
             // subModule
             // 
@@ -200,17 +215,17 @@ namespace auto_proj
             this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
             this.barDockControlTop.Manager = this.barManager1;
-            this.barDockControlTop.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
-            this.barDockControlTop.Size = new System.Drawing.Size(1199, 62);
+            this.barDockControlTop.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            this.barDockControlTop.Size = new System.Drawing.Size(2227, 62);
             // 
             // barDockControlBottom
             // 
             this.barDockControlBottom.CausesValidation = false;
             this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.barDockControlBottom.Location = new System.Drawing.Point(0, 608);
+            this.barDockControlBottom.Location = new System.Drawing.Point(0, 1259);
             this.barDockControlBottom.Manager = this.barManager1;
-            this.barDockControlBottom.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
-            this.barDockControlBottom.Size = new System.Drawing.Size(1199, 0);
+            this.barDockControlBottom.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            this.barDockControlBottom.Size = new System.Drawing.Size(2227, 0);
             // 
             // barDockControlLeft
             // 
@@ -218,17 +233,17 @@ namespace auto_proj
             this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
             this.barDockControlLeft.Location = new System.Drawing.Point(0, 62);
             this.barDockControlLeft.Manager = this.barManager1;
-            this.barDockControlLeft.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
-            this.barDockControlLeft.Size = new System.Drawing.Size(0, 546);
+            this.barDockControlLeft.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            this.barDockControlLeft.Size = new System.Drawing.Size(0, 1197);
             // 
             // barDockControlRight
             // 
             this.barDockControlRight.CausesValidation = false;
             this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.barDockControlRight.Location = new System.Drawing.Point(1199, 62);
+            this.barDockControlRight.Location = new System.Drawing.Point(2227, 62);
             this.barDockControlRight.Manager = this.barManager1;
-            this.barDockControlRight.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
-            this.barDockControlRight.Size = new System.Drawing.Size(0, 546);
+            this.barDockControlRight.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            this.barDockControlRight.Size = new System.Drawing.Size(0, 1197);
             // 
             // subCreateProj
             // 
@@ -242,17 +257,31 @@ namespace auto_proj
             this.barSubItem1.Id = 10;
             this.barSubItem1.Name = "barSubItem1";
             // 
+            // barSorting
+            // 
+            this.barSorting.Caption = "정렬조건 정의";
+            this.barSorting.Id = 23;
+            this.barSorting.Name = "barSorting";
+            this.barSorting.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barSorting_ItemClick);
+            // 
+            // barTemplate
+            // 
+            this.barTemplate.Caption = "Template 생성";
+            this.barTemplate.Id = 24;
+            this.barTemplate.Name = "barTemplate";
+            this.barTemplate.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barTemplate_ItemClick);
+            // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 29F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1199, 608);
+            this.ClientSize = new System.Drawing.Size(2227, 1259);
             this.Controls.Add(this.barDockControlLeft);
             this.Controls.Add(this.barDockControlRight);
             this.Controls.Add(this.barDockControlBottom);
             this.Controls.Add(this.barDockControlTop);
             this.IsMdiContainer = true;
-            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.Margin = new System.Windows.Forms.Padding(7, 6, 7, 6);
             this.Name = "Form1";
             this.Text = "Main";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
@@ -284,6 +313,9 @@ namespace auto_proj
         private DevExpress.XtraBars.BarButtonItem subCustomer;
         private DevExpress.XtraBars.BarButtonItem subHmiBrand;
         private DevExpress.XtraBars.BarButtonItem subModule;
+        private DevExpress.XtraBars.BarButtonItem subCpuPanel;
+        private DevExpress.XtraBars.BarButtonItem barSorting;
+        private DevExpress.XtraBars.BarButtonItem barTemplate;
     }
 }
 
